@@ -33,24 +33,24 @@ import numpy as np
 def ridge_rkhs(x_train, y_train, x_test, y_test, kernelMatrix_callback, ridge_coeff=10):
     plt.plot(x_train, y_train, 'ro', markersize=4)
     observation_matrix = np.matrix(x_train).T
-    y_train_matrix = np.matrix(y_train)
-    x_test_matrix = np.matrix(x_test)
-    y_test_matrix = np.matrix(y_test)
+    y_train_matrix = np.matrix(y_train).T
+    x_test_matrix = np.matrix(x_test).T
+    y_test_matrix = np.matrix(y_test).T
 
     # Kernel matrix accepting 2D array
     # K = sklearn.metrics.pairwise.polynomial_kernel(observation_matrix, degree=2)
     K = kernelMatrix_callback(observation_matrix)
 
-    results = helper.kernel_reg(K, y_train_matrix.T, ridge_coeff)
+    results = helper.kernel_reg(K, y_train_matrix, ridge_coeff)
     # results is our vector of alphas
 
     y_hat_train = K.dot(results)
-    mse_train = helper.mse(y_hat_train, y_train_matrix.T)
+    mse_train = helper.mse(y_hat_train, y_train_matrix)
 
     # Prediction is just KernelMatrix_to_predict * alphas
-    K_predict = kernelMatrix_callback(observation_matrix.T, Y=x_test_matrix)
+    K_predict = kernelMatrix_callback(observation_matrix, Y=x_test_matrix)
     y_predict = K_predict.T.dot(results)
-    mse = helper.mse(y_predict, y_test_matrix.T)
+    mse = helper.mse(y_predict, y_test_matrix)
 
     plt.plot(x_test, y_predict, 'yo', markersize=4)
     plt.legend(mse)
