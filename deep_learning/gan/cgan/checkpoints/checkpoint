@@ -1,0 +1,2 @@
+model_checkpoint_path: "cgan_concat_embed"
+all_model_checkpoint_paths: "cgan_concat_embed"
