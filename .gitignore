@@ -1,1 +1,6 @@
 ageron_book/*
+helper_example/exercises/data_small.json
+helper_example/exercises/data_large.json
+helper_example/housing_1.csv
+helper_example/housing_2.csv
+helper_example/housing_3.csv
